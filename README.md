@@ -37,14 +37,14 @@ docker compose -f environments/deploy/docker-compose.yml up --build
 
 ## 2. Additional Settings
 
-### 2.1 Docker base image
+### 2.1 Docker Base Image
 > Point the python base image to internal registry (Dockerfile)
 ```dockerfile
 ARG UV_IMAGE=<registry-endpoint>/astral-sh/uv:python3.12-bookworm-slim
 FROM ${UV_IMAGE} AS runtime
 ```
 
-### 2.2 Package mirrors
+### 2.2 Package Mirrors
 > Swap package index to match environment (pyproject.toml)
 ```toml
 [[tool.uv.index]]
@@ -52,4 +52,17 @@ name = "pytorch-cpu"
 url = "http://<internal-mirror>/pypi" # Nexus Proxy Mirror
 verify_ssl = false
 explicit = true
+```
+
+### 2.3 Package Proxy
+> Replace the source/sdist/wheels URLs with the proxy URLs (uv.lock)
+```uv
+[[package]]
+name = "package-name"
+version = "package-version"
+source = { registry = "https://<registry-url>/simple" }
+sdist = { url = "https://<registry-url>/packages/.../annotated_types-0.7.0.tar.gz", ... }
+wheels = [
+    { url = "https://<registry-url>/packages/.../annotated_types-0.7.0-py3-none-any.whl", ..." },
+]
 ```

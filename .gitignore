@@ -4,6 +4,7 @@ __pycache__/
 *$py.class
 **/.DS_Store
 .gitignore
+AGENTS.md
 
 # C extensions
 *.so
