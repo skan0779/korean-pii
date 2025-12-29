@@ -1,4 +1,9 @@
 # korean-pii
+![Python](https://img.shields.io/badge/Python-3.12-3776AB?logo=python&logoColor=white)
+![FastAPI](https://img.shields.io/badge/FastAPI-0.121-009688?logo=fastapi&logoColor=white)
+![KoELECTRA](https://img.shields.io/badge/KoELECTRA-small--v3--modu--ner-5C6BC0?logo=huggingface&logoColor=white)
+![Presidio](https://img.shields.io/badge/Presidio-2.2.360-7B68EE?logo=microsoft&logoColor=white)
+![PaddleOCR](https://img.shields.io/badge/PaddleOCR-3.2-2563EB?logo=paddlepaddle&logoColor=white)
 > Korean PII detection and redaction(masking) for text and images in an air-gapped environment (Dockerized, CPU-only)
 
 ---
