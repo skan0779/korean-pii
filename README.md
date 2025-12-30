@@ -7,7 +7,6 @@
 > Korean PII detection and redaction(masking) for text and images in an air-gapped environment (Dockerized, CPU-only)
 
 ## PII Field
-> 고유식별정보 탐지 이후 일반개인정보 조합 탐지 진행
 | TAG | Categoary | Method | Policy |
 | --- | --- | --- | --- |
 | **주민등록번호** | 고유식별정보 | Regex + Checksum(행안부) | 단일 탐지 즉시 차단 |
@@ -22,7 +21,6 @@
 | **사업자등록번호** | 일반개인정보 | Regex + Checksum(국세청) | 조합 탐지 시 차단(사업자 + 이름/계좌) |
 
 ## API
-> FastAPI 
 | TAG | API | Detail |
 | --- | --- | --- |
 | GET | **/pii/swagger** | Swagger UI |
@@ -31,14 +29,15 @@
 | POST | **/pii/text** | 텍스트 개인정보 탐지 및 마스킹 |
 | POST | **/pii/image** | 이미지 개인정보 탐지  |
 
-## Response Schema
-| Field | Type | Description |
-| --- | --- | --- |
-| **blocked** | boolean | 차단 여부 |
-| **masked_text** | string | 마스킹된 텍스트 |
-| **label_list** | string[] | 탐지된 개인정보 목록 |
-| **reason** | string | 차단 사유 (고유식별정보, 일반개인정보) |
-
+## Response
+```json
+{
+  "blocked": true,
+  "masked_text": "홍길동의 주민등록번호는 [주민등록번호]입니다.",
+  "label_list": ["주민등록번호"],
+  "reason": "고유식별정보"
+}
+```
 
 ---
 
