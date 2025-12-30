@@ -7,7 +7,7 @@
 > Korean PII detection and redaction(masking) for text and images in an air-gapped environment (Dockerized, CPU-only)
 
 ## PII Field
-| TAG | Categoary | Method | Policy |
+| Field | Categoary | Method | Policy |
 | --- | --- | --- | --- |
 | **주민등록번호** | 고유식별정보 | Regex + Checksum(행안부) | 단일탐지 즉시 차단 |
 | **외국인등록번호** | 고유식별정보 | Regex + Checksum(행안부) | 단일탐지 즉시 차단 |
