@@ -6,7 +6,7 @@
 ![PaddleOCR](https://img.shields.io/badge/PaddleOCR-3.2-2563EB?logo=paddlepaddle&logoColor=white)
 > Korean PII detection and redaction(masking) for text and images in an air-gapped environment (Dockerized, CPU-only)
 
-**PII Field**
+## PII Field
 | Field | Categoary | Method | Policy |
 | --- | --- | --- | --- |
 | **주민등록번호** | 고유식별정보 | Regex + Checksum | 단일탐지 즉시 차단 |
@@ -29,7 +29,7 @@
 | POST | **/pii/text** | 텍스트 개인정보 탐지 및 마스킹 |
 | POST | **/pii/image** | 이미지 개인정보 탐지  |
 
-## Response
+## API Response (/pii/text, /pii/image)
 ```json
 {
   "blocked": true,
