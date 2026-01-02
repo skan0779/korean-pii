@@ -29,7 +29,23 @@
 | POST | **/pii/text** | 텍스트 개인정보 탐지 및 마스킹 |
 | POST | **/pii/image** | 이미지 개인정보 탐지  |
 
-## API Response (/pii/text, /pii/image)
+## API Request
+### /pii/text
+```json
+{
+  "text": "홍길동의 주민등록번호는 900101-1234567입니다."
+}
+```
+
+### /pii/image
+`multipart/form-data`로 파일을 전달합니다. 다중 파일도 `files` 키를 반복해서 전송하면 됩니다.
+```bash
+curl -X POST "http://<host>:8000/pii/image" \
+  -F "files=@/path/to/id-card.png"
+```
+
+## API Response
+### /pii/text, /pii/image
 ```json
 {
   "blocked": true,
