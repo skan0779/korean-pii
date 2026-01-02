@@ -6,7 +6,12 @@
 ![PaddleOCR](https://img.shields.io/badge/PaddleOCR-3.2-2563EB?logo=paddlepaddle&logoColor=white)
 > Korean PII detection and redaction(masking) for text and images in an air-gapped environment (Dockerized, CPU-only)
 
-## PII Field
+
+---
+
+
+## 0. Policy
+> `고유식별정보`를 정규식+검증으로 발견하면 즉시 차단/마스킹하고, 그 외 `일반개인정보`는 지정된 조합이 n자 이내 함께 있을 때 차단/마스킹합니다.
 | Field | Categoary | Method | Policy |
 | --- | --- | --- | --- |
 | **주민등록번호** | 고유식별정보 | Regex + Checksum | 단일탐지 즉시 차단 |
@@ -20,40 +25,6 @@
 | **카드번호** | 일반개인정보 | Presidio | 조합탐지 차단(이름/전화/이메일/계좌) |
 | **사업자등록번호** | 일반개인정보 | Regex + Checksum | 조합탐지 차단(이름/계좌) |
 
-## API
-| TAG | API | Detail |
-| --- | --- | --- |
-| GET | **/pii/swagger** | Swagger UI |
-| GET | **/pii/openapi.json** | OpenAPI |
-| GET | **/pii/ping** | 서버 상태 확인 |
-| POST | **/pii/text** | 텍스트 개인정보 탐지 및 마스킹 |
-| POST | **/pii/image** | 이미지 개인정보 탐지  |
-
-## API Request
-### /pii/text
-```json
-{
-  "text": "홍길동의 주민등록번호는 900101-1234567입니다."
-}
-```
-
-### /pii/image
-`multipart/form-data`로 파일을 전달합니다. 다중 파일도 `files` 키를 반복해서 전송하면 됩니다.
-```bash
-curl -X POST "http://<host>:8000/pii/image" \
-  -F "files=@/path/to/id-card.png"
-```
-
-## API Response
-### /pii/text, /pii/image
-```json
-{
-  "blocked": true,
-  "masked_text": "홍길동의 주민등록번호는 [주민등록번호]입니다.",
-  "label_list": ["주민등록번호"],
-  "reason": "고유식별정보"
-}
-```
 
 ---
 
@@ -88,16 +59,58 @@ http://<host>:8000/pii/swagger
 ---
 
 
-## 2. Settings for air-gapped environment
+## 2. API
 
-### 2.1 Docker Base Image
+### 2.1 API Swagger
+> 서버 실행 시 `http://<host>:8000/pii/swagger`에서 자세히 확인할 수 있습니다.
+| TAG | API | Detail |
+| --- | --- | --- |
+| GET | **/pii/swagger** | Swagger UI |
+| GET | **/pii/openapi.json** | OpenAPI |
+| GET | **/pii/ping** | 서버 상태 확인 |
+| POST | **/pii/text** | 텍스트 개인정보 탐지 및 마스킹 |
+| POST | **/pii/image** | 이미지 개인정보 탐지  |
+
+### 2.2.1 API Request - /pii/text
+> `text` 필수 문자열 필드에 검사할 전체 문장을 넣어 JSON으로 POST합니다.
+```json
+{
+  "text": "홍길동의 주민등록번호는 900101-1234567입니다."
+}
+```
+
+### 2.2.2 API Request - /pii/image
+> `multipart/form-data`로 파일을 전달합니다. 다중 파일도 `files` 키를 반복해서 전송하면 됩니다.
+```bash
+curl -X POST "http://<host>:8000/pii/image" \
+  -F "files=@/path/to/id-card.png"
+```
+
+### 2.3 API Response - /pii/text, /pii/image
+> `/pii/image`는 `masked_text`를 반환하지 않습니다.
+```json
+{
+  "blocked": true,
+  "masked_text": "홍길동의 주민등록번호는 [주민등록번호]입니다.",
+  "label_list": ["주민등록번호"],
+  "reason": "고유식별정보"
+}
+```
+
+
+---
+
+
+## 3. Settings for air-gapped environment
+
+### 3.1 Docker Base Image
 > Point the python base image to internal registry (Dockerfile)
 ```dockerfile
 ARG UV_IMAGE=<registry-endpoint>/astral-sh/uv:python3.12-bookworm-slim
 FROM ${UV_IMAGE} AS runtime
 ```
 
-### 2.2 Package Mirror
+### 3.2 Package Mirror
 > Swap package index to match environment (pyproject.toml)
 ```toml
 [[tool.uv.index]]
@@ -107,7 +120,7 @@ verify_ssl = false
 explicit = true
 ```
 
-### 2.3 Package Proxy
+### 3.3 Package Proxy
 > Replace the source/sdist/wheels URLs with the proxy URLs (uv.lock)
 ```uv
 [[package]]
