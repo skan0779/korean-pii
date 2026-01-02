@@ -10,7 +10,7 @@
 ---
 
 
-## 0. Policy
+## 1. Policy
 > `고유식별정보`를 정규식+검증으로 발견하면 즉시 차단/마스킹하고, 그 외 `일반개인정보`는 지정된 조합이 n자 이내 함께 있을 때 차단/마스킹합니다.
 
 | Field | Categoary | Method | Policy |
@@ -29,28 +29,28 @@
 
 ---
 
-## 1. Quick Start
+## 2. Quick Start
 
-### 1.1 Setup (uv)
+### 2.1 Setup (uv)
 > Use `uv` for dependency management.
 ```bash
 curl -LsSf https://astral.sh/uv/install.sh | sh  # Install uv
 uv sync  # Sync dependencies
 ```
 
-### 1.2 Run Locally
+### 2.2 Run Locally
 > Start the FastAPI application
 ```bash
 uv run uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
 ```
 
-### 1.3 Run with Docker
+### 2.3 Run with Docker
 > Build and run using the deployment compose file.
 ```bash
 docker compose -f environments/deploy/docker-compose.yml up --build
 ```
 
-### 1.4 Swagger API
+### 2.4 Swagger API
 > Swagger UI assets are bundled in `app/static` (load in air‑gapped environment)
 ```bash
 http://<host>:8000/pii/swagger
@@ -60,10 +60,11 @@ http://<host>:8000/pii/swagger
 ---
 
 
-## 2. API
+## 3. API
 
-### 2.1 API Swagger
+### 3.1 API Swagger
 > 서버 실행 시 `http://<host>:8000/pii/swagger`에서 자세히 확인할 수 있습니다.
+
 | TAG | API | Detail |
 | --- | --- | --- |
 | GET | **/pii/swagger** | Swagger UI |
@@ -72,7 +73,7 @@ http://<host>:8000/pii/swagger
 | POST | **/pii/text** | 텍스트 개인정보 탐지 및 마스킹 |
 | POST | **/pii/image** | 이미지 개인정보 탐지  |
 
-### 2.2.1 API Request - /pii/text
+### 3.2.1 API Request - /pii/text
 > `text` 필수 문자열 필드에 검사할 전체 문장을 넣어 JSON으로 POST합니다.
 ```json
 {
@@ -80,14 +81,14 @@ http://<host>:8000/pii/swagger
 }
 ```
 
-### 2.2.2 API Request - /pii/image
+### 3.2.2 API Request - /pii/image
 > `multipart/form-data`로 파일을 전달합니다. 다중 파일도 `files` 키를 반복해서 전송하면 됩니다.
 ```bash
 curl -X POST "http://<host>:8000/pii/image" \
   -F "files=@/path/to/id-card.png"
 ```
 
-### 2.3 API Response - /pii/text, /pii/image
+### 3.3 API Response - /pii/text, /pii/image
 > `/pii/image`는 `masked_text`를 반환하지 않습니다.
 ```json
 {
@@ -102,16 +103,16 @@ curl -X POST "http://<host>:8000/pii/image" \
 ---
 
 
-## 3. Settings for air-gapped environment
+## 4. Settings for air-gapped environment
 
-### 3.1 Docker Base Image
+### 4.1 Docker Base Image
 > Point the python base image to internal registry (Dockerfile)
 ```dockerfile
 ARG UV_IMAGE=<registry-endpoint>/astral-sh/uv:python3.12-bookworm-slim
 FROM ${UV_IMAGE} AS runtime
 ```
 
-### 3.2 Package Mirror
+### 4.2 Package Mirror
 > Swap package index to match environment (pyproject.toml)
 ```toml
 [[tool.uv.index]]
@@ -121,7 +122,7 @@ verify_ssl = false
 explicit = true
 ```
 
-### 3.3 Package Proxy
+### 4.3 Package Proxy
 > Replace the source/sdist/wheels URLs with the proxy URLs (uv.lock)
 ```uv
 [[package]]
