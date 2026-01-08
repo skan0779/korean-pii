@@ -134,3 +134,16 @@ wheels = [
     { url = "https://<registry-url>/packages/.../annotated_types-0.7.0-py3-none-any.whl", ..." },
 ]
 ```
+
+
+---
+
+
+## 5. Models
+> Reference links
+
+| Name | Link |
+| --- | --- |
+| NER | [KoELECTRA-small-v3-modu-ner](https://huggingface.co/Leo97/KoELECTRA-small-v3-modu-ner) |
+| OCR (det) | [PP-OCRv5_mobile_det](https://huggingface.co/PaddlePaddle/PP-OCRv5_mobile_det) |
+| OCR (rec) | [korean_PP-OCRv5_mobile_rec](https://huggingface.co/PaddlePaddle/korean_PP-OCRv5_mobile_rec) |
