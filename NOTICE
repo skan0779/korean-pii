@@ -1,0 +1,14 @@
+This distribution provides CPU-only inference assets and/or an ONNX-converted
+model for Korean PII detection and redaction.
+
+Model traceability (upstream references):
+- NER model: Leo97/KoELECTRA-small-v3-modu-ner (fine-tuned from monologg/koelectra-small-v3-discriminator)
+- Reference implementation / model directory: skan0779/korean-pii (models directory)
+
+The ONNX artifact is a format conversion and CPU-oriented optimization intended
+to improve inference runtime only; no functional change is intended compared to
+the upstream model behavior.
+
+This product is licensed under the Apache License, Version 2.0 (Apache-2.0).
+You may obtain a copy of the License at:
+http://www.apache.org/licenses/LICENSE-2.0

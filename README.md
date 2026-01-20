@@ -147,3 +147,12 @@ wheels = [
 | NER | [KoELECTRA-small-v3-modu-ner](https://huggingface.co/Leo97/KoELECTRA-small-v3-modu-ner) |
 | OCR (det) | [PP-OCRv5_mobile_det](https://huggingface.co/PaddlePaddle/PP-OCRv5_mobile_det) |
 | OCR (rec) | [korean_PP-OCRv5_mobile_rec](https://huggingface.co/PaddlePaddle/korean_PP-OCRv5_mobile_rec) |
+
+
+---
+
+## License
+
+License: This repository (including the ONNX artifact) is provided under the Apache License 2.0 (Apache-2.0). See LICENSE and NOTICE for details.
+
+Upstream references: The ONNX model is derived from Leo97/KoELECTRA-small-v3-modu-ner and its base model monologg/koelectra-small-v3-discriminator, with conversion for CPU inference optimization only.
