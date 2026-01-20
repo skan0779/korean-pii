@@ -152,7 +152,12 @@ wheels = [
 ---
 
 ## License
+This project is licensed under the Apache License 2.0. See [LICENSE](/LICENSE) and [NOTICE](/NOTICE).
 
 License: This repository (including the ONNX artifact) is provided under the Apache License 2.0 (Apache-2.0). See LICENSE and NOTICE for details.
 
 Upstream references: The ONNX model is derived from Leo97/KoELECTRA-small-v3-modu-ner and its base model monologg/koelectra-small-v3-discriminator, with conversion for CPU inference optimization only.
+
+라이선스: 본 저장소의 소스 및 배포 산출물(ONNX 포함)은 **Apache License 2.0(Apache-2.0)**을 따릅니다. 자세한 내용은 LICENSE 및 NOTICE를 참고하세요.
+
+참조 모델: 본 ONNX 모델은 Leo97/KoELECTRA-small-v3-modu-ner(upstream) 및 해당 모델의 베이스인 monologg/koelectra-small-v3-discriminator를 참조하며, CPU 추론 최적화를 위한 ONNX 변환만 수행했습니다.
